@@ -1,0 +1,69 @@
+{% extends 'app/layout.html' %}
+<!doctype html>
+{% load static %}
+
+{% block navbarHome %}active{% endblock navbarHome %}
+
+{% block headblock %}
+    <title>iBlog</title>
+    <link rel="stylesheet" href="{% static 'assets/css/homepage.css' %}">
+
+{% endblock headblock %}
+
+{% block navbar-right %}
+    <li class="nav-item">
+    {%if name != None %}
+    <li class="nav-item dropdown" >
+        <a class="nav-link dropdown-toggle" style="color: #ffc107;" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{name|title}}
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+          <li><a class="dropdown-item" href="{% url 'mypost' %}">My Post</a></li>
+          <li><a class="dropdown-item" href="{% url 'dashboard' %}">Add Post</a></li>
+        </ul>
+        
+      </li>
+    {% else %}
+        <a class=" btn  btn-outline-warning navbar-custom-button" href="{% url 'login' %}">Login</a>
+    {% endif %}
+    </li>
+{% endblock navbar-right %}
+
+
+
+
+{% block bodyblock %}
+
+
+<div class="container mt-2">
+
+<table>
+    {% for post in posts %}
+    
+    <tr >
+
+
+        <div class="card mt-2">
+            <div class="card-body">
+              <h5 class="card-title">{{post.title}}</h5>
+              <p class="card-text">{{post.post}}</p>
+            </div>
+            <div class="card-footer">
+              <small class="text-muted">{{post.date}} &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp- {{post.username}}</small>
+            </div>
+          </div>
+
+        
+
+
+    </tr>
+    {%empty%}
+    <h2>No Blogs</h2>
+    {% endfor %}
+</table>
+</div>
+
+
+{% endblock bodyblock %}
+
